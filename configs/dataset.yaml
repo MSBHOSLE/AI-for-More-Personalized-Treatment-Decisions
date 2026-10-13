@@ -1,0 +1,80 @@
+# Dataset Configuration for Causal Medical AI
+clinical_scenario: "personalized_cardiovascular_treatment"
+description: "Observational clinical cohort for personalized therapy effect estimation (CATE/ITE)"
+
+simulation:
+  n_samples: 5000
+  test_size: 0.25
+  random_seed: 42
+  confounding_strength: 1.5
+  treatment_prevalence: 0.35 # Realistic clinical imbalance
+  unobserved_confounding_variance: 0.25
+
+features:
+  demographics:
+    - name: "age"
+      type: "continuous"
+      mean: 62.0
+      std: 10.5
+      min: 35.0
+      max: 88.0
+    - name: "female"
+      type: "binary"
+      p: 0.48
+    - name: "bmi"
+      type: "continuous"
+      mean: 28.5
+      std: 5.2
+      min: 18.0
+      max: 48.0
+  vitals:
+    - name: "systolic_bp"
+      type: "continuous"
+      mean: 138.0
+      std: 16.0
+    - name: "heart_rate"
+      type: "continuous"
+      mean: 74.0
+      std: 11.0
+  biomarkers:
+    - name: "hba1c"
+      type: "continuous"
+      mean: 8.2
+      std: 1.4
+    - name: "egfr"
+      type: "continuous"
+      mean: 68.0
+      std: 18.0
+    - name: "ldl_cholesterol"
+      type: "continuous"
+      mean: 115.0
+      std: 28.0
+    - name: "crp"
+      type: "continuous"
+      mean: 3.2
+      std: 2.1
+  history:
+    - name: "prior_cvd"
+      type: "binary"
+      p: 0.28
+    - name: "diabetes_duration_years"
+      type: "continuous"
+      mean: 7.5
+      std: 4.8
+    - name: "smoker"
+      type: "binary"
+      p: 0.22
+
+outcome:
+  name: "cv_risk_reduction"
+  type: "continuous"
+  description: "Cardiovascular risk reduction score (% points, higher is more beneficial)"
+  baseline_mean: 4.5
+  noise_std: 1.2
+
+paths:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  train_data: "data/processed/train_cohort.csv"
+  test_data: "data/processed/test_cohort.csv"
+  synthetic_ground_truth: "data/processed/ground_truth_effects.csv"

@@ -1,0 +1,50 @@
+# Training and Estimator Configurations
+random_seed: 42
+
+propensity_model:
+  type: "logistic_regression" # Options: logistic_regression, gradient_boosting
+  clip_bounds: [0.02, 0.98] # Enforce strict positivity overlap
+  max_iter: 1000
+  regularization_c: 1.0
+
+base_models:
+  regression:
+    model_type: "gradient_boosting" # Options: gradient_boosting, random_forest, ridge
+    n_estimators: 100
+    learning_rate: 0.08
+    max_depth: 4
+    min_samples_leaf: 10
+    random_state: 42
+  propensity:
+    model_type: "logistic_regression"
+    c_param: 1.0
+    random_state: 42
+
+estimators:
+  s_learner:
+    include_interactions: true
+    base_model: "gradient_boosting"
+  t_learner:
+    base_model_t0: "gradient_boosting"
+    base_model_t1: "gradient_boosting"
+  x_learner:
+    stage1_model: "gradient_boosting"
+    stage2_model: "gradient_boosting"
+    propensity_model: "logistic_regression"
+  causal_forest:
+    n_estimators: 100
+    min_samples_leaf: 12
+    subsample_ratio: 0.8
+    honesty: true
+    random_state: 42
+  doubly_robust:
+    outcome_model: "gradient_boosting"
+    propensity_model: "logistic_regression"
+    final_stage_model: "gradient_boosting"
+    n_cross_folds: 5
+    random_state: 42
+
+confidence_intervals:
+  method: "bootstrap" # Options: bootstrap, asymptotic
+  n_bootstraps: 100
+  alpha: 0.05 # 95% Confidence Interval

@@ -1,0 +1,2 @@
+tau_estimate,standard_error,t_statistic,degrees_of_freedom,partial_r2_treatment,robustness_value_rv_q,robustness_value_rv_alpha,rv_q_percent,rv_alpha_percent
+3.3465731594199988,0.08070603983254279,41.46619945300028,1236,0.5817889663062161,0.6737205982422407,0.6575539362368985,67.37205982422407,65.75539362368986

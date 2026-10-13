@@ -1,0 +1,40 @@
+# Experiments Configuration
+random_seed: 42
+
+benchmarks:
+  estimators:
+    - "S-Learner"
+    - "T-Learner"
+    - "X-Learner"
+    - "Causal Forest"
+    - "Doubly Robust (AIPW)"
+  metrics:
+    - "pehe"              # Precision in Estimation of Heterogeneous Effect (sqrt(E[(tau_hat - tau)^2]))
+    - "ate_bias"          # |ATE_hat - ATE_true|
+    - "ate_rmse"          # RMSE of ATE
+    - "policy_value"      # Expected outcome under estimated treatment assignment policy
+    - "auuc"              # Area under Uplift / Qini Curve
+    - "ci_coverage"       # Coverage probability of 95% confidence intervals
+    - "ci_mean_width"     # Average width of 95% confidence intervals
+
+sample_size_experiment:
+  sample_sizes: [500, 1000, 2000, 3500, 5000]
+  n_replications: 5
+  output_dir: "experiments/results/sample_size"
+
+confounding_experiment:
+  unobserved_confounding_strengths: [0.0, 0.25, 0.5, 1.0, 1.5, 2.0]
+  n_replications: 5
+  output_dir: "experiments/results/confounding"
+
+treatment_imbalance_experiment:
+  treatment_prevalences: [0.05, 0.10, 0.20, 0.35, 0.50]
+  n_replications: 5
+  output_dir: "experiments/results/treatment_imbalance"
+
+sensitivity_analysis:
+  gamma_range: [1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.5, 3.0]
+  cinelli_hazlett:
+    kd: [1.0, 2.0, 3.0]
+    ky: [1.0, 2.0, 3.0]
+  output_dir: "experiments/results/sensitivity"
